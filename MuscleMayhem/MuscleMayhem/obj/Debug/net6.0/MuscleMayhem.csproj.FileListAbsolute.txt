@@ -1,0 +1,14 @@
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\bin\Debug\net6.0\MuscleMayhem.exe
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\bin\Debug\net6.0\MuscleMayhem.deps.json
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\bin\Debug\net6.0\MuscleMayhem.runtimeconfig.json
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\bin\Debug\net6.0\MuscleMayhem.dll
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\bin\Debug\net6.0\MuscleMayhem.pdb
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.GeneratedMSBuildEditorConfig.editorconfig
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.AssemblyInfoInputs.cache
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.AssemblyInfo.cs
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.csproj.CoreCompileInputs.cache
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.dll
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\refint\MuscleMayhem.dll
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.pdb
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\MuscleMayhem.genruntimeconfig.cache
+E:\NEU\11.osztály\alk. fejlesztes\MuscleMayhem\MuscleMayhem\obj\Debug\net6.0\ref\MuscleMayhem.dll
