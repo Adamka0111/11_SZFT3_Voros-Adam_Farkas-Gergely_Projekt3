@@ -26,8 +26,75 @@ class Program
         DrawMap(map, width, height);
 
         // Mozgások
-        
-        
+        while (true)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    if (currentY > 0)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentY--;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (currentY < height - 1)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentY++;
+                    }
+                    break;
+                case ConsoleKey.LeftArrow:
+                    if (currentX > 0)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentX--;
+                    }
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (currentX < width - 1)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentX++;
+                    }
+                    break;
+                case ConsoleKey.W:
+                    if (currentY > 0)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentY--;
+                    }
+                    break;
+                case ConsoleKey.S:
+                    if (currentY < height - 1)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentY++;
+                    }
+                    break;
+                case ConsoleKey.A:
+                    if (currentX > 0)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentX--;
+                    }
+                    break;
+                case ConsoleKey.D:
+                    if (currentX < width - 1)
+                    {
+                        map[currentY, currentX] = '.';
+                        currentX++;
+                    }
+                    break;
+                case ConsoleKey.Escape:
+                    return;
+            }
+
+            map[currentY, currentX] = 'O';
+
+            DrawMap(map, width, height);
+        }
     }
     static void DrawMap(char[,] map, int width, int height)
     {
