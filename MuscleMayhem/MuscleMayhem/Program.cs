@@ -2,7 +2,67 @@
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
+    {
+        Console.Title = "Game";
+
+        MainMenu();
+    }
+
+    static void MainMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("=== Menü ===");
+        Console.WriteLine("1. Játék");
+        Console.WriteLine("2. Tutorial");
+        Console.WriteLine("3. Controls");
+        Console.WriteLine("4. Kilépés");
+        Console.Write("Válassz egy lehetőséget: ");
+
+        string choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1":
+                StartGame();
+                break;
+            case "2":
+                ShowTutorial();
+                break;
+            case "3":
+                ShowControls();
+                break;
+            case "4":
+                Environment.Exit(0);
+                break;
+            default:
+                Console.WriteLine("Érvénytelen választás. Kérlek, próbáld újra.");
+                Console.ReadKey();
+                MainMenu();
+                break;
+        }
+    }
+
+    static void ShowTutorial()
+    {
+        Console.Clear();
+        Console.WriteLine("=== Tutorial ===");
+        Console.WriteLine("Ez lenne a játék tutorial-ja.");
+        Console.WriteLine("Nyomj egy billentyűt a visszalépéshez a menübe...");
+        Console.ReadKey();
+        MainMenu();
+    }
+
+    static void ShowControls()
+    {
+        Console.Clear();
+        Console.WriteLine("=== Controls ===");
+        Console.WriteLine("Mozgás: WASD vagy Nyilakí");
+        Console.WriteLine("Nyomj egy billentyűt a visszalépéshez a menübe...");
+        Console.ReadKey();
+        MainMenu();
+    }
+    static void StartGame()
     {
         int startX = 0;
         int startY = 0;
@@ -20,8 +80,7 @@ class Program
             }
         }
 
-        map[startY, startX] = 'O'; 
-
+        map[startY, startX] = 'O';
 
         DrawMap(map, width, height);
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\NEU\\11.osztály\\alk. fejlesztes\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {}
+    "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {}
   },
   "projects": {
-    "E:\\NEU\\11.osztály\\alk. fejlesztes\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {
+    "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\NEU\\11.osztály\\alk. fejlesztes\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
+        "projectUniqueName": "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
         "projectName": "MuscleMayhem",
-        "projectPath": "E:\\NEU\\11.osztály\\alk. fejlesztes\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
+        "projectPath": "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
         "packagesPath": "C:\\Users\\farka_2amu2y3\\.nuget\\packages\\",
-        "outputPath": "E:\\NEU\\11.osztály\\alk. fejlesztes\\MuscleMayhem\\MuscleMayhem\\obj\\",
+        "outputPath": "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\farka_2amu2y3\\AppData\\Roaming\\NuGet\\NuGet.Config",
