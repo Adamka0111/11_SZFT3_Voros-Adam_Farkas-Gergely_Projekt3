@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {}
+    "C:\\Users\\Vörös Ádám\\Desktop\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {
+    "C:\\Users\\Vörös Ádám\\Desktop\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
+        "projectUniqueName": "C:\\Users\\Vörös Ádám\\Desktop\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
         "projectName": "MuscleMayhem",
-        "projectPath": "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
-        "packagesPath": "C:\\Users\\farka_2amu2y3\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\farka_2amu2y3\\OneDrive\\Asztali gép\\MuscleMayhem\\MuscleMayhem\\obj\\",
+        "projectPath": "C:\\Users\\Vörös Ádám\\Desktop\\MuscleMayhem\\MuscleMayhem\\MuscleMayhem.csproj",
+        "packagesPath": "C:\\Users\\Vörös Ádám\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vörös Ádám\\Desktop\\MuscleMayhem\\MuscleMayhem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\farka_2amu2y3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Vörös Ádám\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
