@@ -160,10 +160,43 @@ class Game
         ClassSelect();
     }
 
+    static void Cutscene2()
+    {
+        Console.Clear();
+        Console.WriteLine("==============================================================");
+        Console.WriteLine("A biztonsági őr elintézése után tovább mész leverni\na menedzsert.");
+        Console.WriteLine("Nyomj egy billentyűt a folytatáshoz...");
+        Console.WriteLine("==============================================================");
+        Console.ReadKey();
+        LevelUp();
+    }
+
+    static void Cutscene3()
+    {
+        Console.Clear();
+        Console.WriteLine("==============================================================");
+        Console.WriteLine("A menedzsert is elverted, idelye legyőzni a tulajt.");
+        Console.WriteLine("Nyomj egy billentyűt a folytatáshoz...");
+        Console.WriteLine("==============================================================");
+        Console.ReadKey();
+        LevelUp();
+    }
+
+    static void Cutscene4()
+    {
+        Console.Clear();
+        Console.WriteLine("==============================================================");
+        Console.WriteLine("Gratulálunk! Legyőzted a tulajt, és szégyenében odaadta neked\naz egész edzőtermet. Mostantól te vagy a tulaj.");
+        Console.WriteLine("Nyomj egy billentyűt a folytatáshoz...");
+        Console.WriteLine("==============================================================");
+        Console.ReadKey();
+        MainMenu();
+    }
+
     static void ClassSelect()
     {
         Console.Clear();
-        string[,] charclass = new string[,]{ { " ", "Nehéz öklű" }, { " ", "Vas bőrű" }, { " ", "Gyors lábú" }, { " ", "Izompacsirta"} };
+        string[,] charclass = new string[,]{ { " ", "Nehéz öklű" }, { " ", "Vas bőrű" }, { " ", "Gyors lábú" }, { " ", "Izompacsirta"}, { " ", "Erőberő" }, { " ", "Mitugrász" } };
         int classPoint = 0;
         int classChoice = 0;
         charclass[classPoint, 0] = ">";
@@ -175,7 +208,7 @@ class Game
             Console.WriteLine("Válassz egy karakter osztályt:");
             Console.WriteLine();
 
-            DrawMenu(4, charclass);
+            DrawMenu(6, charclass);
 
             Console.WriteLine("==============================================================");
 
@@ -186,7 +219,7 @@ class Game
                     charclass[classPoint, 0] = " ";
                     if (classPoint == 0)
                     {
-                        classPoint = 3;
+                        classPoint = 5;
                     }
                     else
                     {
@@ -195,7 +228,7 @@ class Game
                     break;
                 case ConsoleKey.S:
                     charclass[classPoint, 0] = " ";
-                    if (classPoint == 3)
+                    if (classPoint == 5)
                     {
                         classPoint = 0;
                     }
@@ -215,6 +248,94 @@ class Game
             {
                 case 1:
                     PunchLVL++;
+                    Stage = 1;
+                    StartGame();
+                    break;
+                case 2:
+                    BlockLVL++;
+                    Stage = 1;
+                    StartGame();
+                    break;
+                case 3:
+                    DodgeLVL++;
+                    Stage = 1;
+                    StartGame();
+                    break;
+                case 4:
+                    FlexLVL++;
+                    Stage = 1;
+                    StartGame();
+                    break;
+                case 5:
+                    HealthLVL++;
+                    Stage = 1;
+                    StartGame();
+                    break;
+                case 6:
+                    EnergyLVL++;
+                    Stage = 1;
+                    StartGame();
+                    break;
+            }
+
+        }
+    }
+
+    static void LevelUp()
+    {
+        Console.Clear();
+        string[,] charlvl = new string[,] { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" }, { " ", "Élet" }, { " ", "Energia" } };
+        int lvlPoint = 0;
+        int lvlChoice = 0;
+        charlvl[lvlPoint, 0] = ">";
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("==============================================================");
+            Console.WriteLine("Szintet léptél! Fejlessz egy képességet:");
+            Console.WriteLine();
+
+            DrawMenu(6, charlvl);
+
+            Console.WriteLine("==============================================================");
+
+            ConsoleKeyInfo lvlSelect = Console.ReadKey(true);
+            switch (lvlSelect.Key)
+            {
+                case ConsoleKey.W:
+                    charlvl[lvlPoint, 0] = " ";
+                    if (lvlPoint == 0)
+                    {
+                        lvlPoint = 5;
+                    }
+                    else
+                    {
+                        lvlPoint--;
+                    }
+                    break;
+                case ConsoleKey.S:
+                    charlvl[lvlPoint, 0] = " ";
+                    if (lvlPoint == 5)
+                    {
+                        lvlPoint = 0;
+                    }
+                    else
+                    {
+                        lvlPoint++;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    lvlChoice = lvlPoint + 1;
+                    break;
+            }
+
+            charlvl[lvlPoint, 0] = ">";
+
+            switch (lvlChoice)
+            {
+                case 1:
+                    PunchLVL++;
                     StartGame();
                     break;
                 case 2:
@@ -226,12 +347,22 @@ class Game
                     StartGame();
                     break;
                 case 4:
-                    FlexLVL++; ;
+                    FlexLVL++;
+                    StartGame();
+                    break;
+                case 5:
+                    HealthLVL++;
+                    StartGame();
+                    break;
+                case 6:
+                    EnergyLVL++;
+                    StartGame();
                     break;
             }
 
         }
     }
+
     static void ShowControls()
     {
         Console.Clear();
@@ -241,6 +372,9 @@ class Game
         Console.WriteLine("Főmenü: Esc");
         Console.WriteLine("Nyomj egy billentyűt a visszalépéshez a menübe...");
         Console.WriteLine("===================================================================");
+        Console.ForegroundColor = ConsoleColor.Black;
+        Console.WriteLine("...P: instakill...");
+        Console.ForegroundColor = ConsoleColor.White;
         Console.ReadKey();
         MainMenu();
     }
@@ -396,7 +530,447 @@ class Game
 
     static void StartGame()
     {
-        Console.Clear();
+        switch (Stage)
+        {
+            case 1:
+                Console.Clear();
+                Tutorial = false;
+                HasItem = false;
+                Boss = false;
+                int startX = 4;
+                int startY = 9;
+                int currentX = startX;
+                int currentY = startY;
+
+                int width = 10;
+                int height = 10;
+                char[,] map = new char[height, width];
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        if (i == 0 && (j == 4 || j == 5))
+                        {
+                            map[i, j] = '■';
+                        }
+                        else if (j == 0 && (i == 4 || i == 5))
+                        {
+                            map[i, j] = '■';
+                        }
+                        else if (j == 9 && (i == 4 || i == 5))
+                        {
+                            map[i, j] = '■';
+                        }
+                        else
+                        {
+                            map[i, j] = '·';
+                        }
+                    }
+                }
+
+                map[currentY, currentX] = 'O';
+
+                Room = 0;
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Szoba: {Stage}");
+                    Console.WriteLine("---------------------");
+                    DrawMap(map, width, height);
+                    Console.WriteLine("---------------------");
+                    if (Boss)
+                    {
+                        Console.WriteLine("Az ellenfél legyőzésével megnyílt az út a bosshoz");
+                    }
+                    ConsoleKeyInfo tutorialControl = Console.ReadKey(true);
+                    switch (tutorialControl.Key)
+                    {
+                        case ConsoleKey.W:
+                            if (currentY > 0)
+                            {
+                                if ((currentY == 0 && currentX == 4) || (currentY == 0 && currentX == 5) || (currentY == 4 && currentX == 0) || (currentY == 5 && currentX == 0) || (currentY == 4 && currentX == 9) || (currentY == 5 && currentX == 9))
+                                {
+                                    map[currentY, currentX] = '■';
+                                }
+                                else
+                                {
+                                    map[currentY, currentX] = '·';
+                                }
+                                currentY--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            if (currentY < height - 1)
+                            {
+                                if ((currentY == 0 && currentX == 4) || (currentY == 0 && currentX == 5) || (currentY == 4 && currentX == 0) || (currentY == 5 && currentX == 0) || (currentY == 4 && currentX == 9) || (currentY == 5 && currentX == 9))
+                                {
+                                    map[currentY, currentX] = '■';
+                                }
+                                else
+                                {
+                                    map[currentY, currentX] = '·';
+                                }
+                                currentY++;
+                            }
+                            break;
+                        case ConsoleKey.A:
+                            if (currentX > 0)
+                            {
+                                if ((currentY == 0 && currentX == 4) || (currentY == 0 && currentX == 5) || (currentY == 4 && currentX == 0) || (currentY == 5 && currentX == 0) || (currentY == 4 && currentX == 9) || (currentY == 5 && currentX == 9))
+                                {
+                                    map[currentY, currentX] = '■';
+                                }
+                                else
+                                {
+                                    map[currentY, currentX] = '·';
+                                }
+                                currentX--;
+                            }
+                            break;
+                        case ConsoleKey.D:
+                            if (currentX < width - 1)
+                            {
+                                if ((currentY == 0 && currentX == 4) || (currentY == 0 && currentX == 5) || (currentY == 4 && currentX == 0) || (currentY == 5 && currentX == 0) || (currentY == 4 && currentX == 9) || (currentY == 5 && currentX == 9))
+                                {
+                                    map[currentY, currentX] = '■';
+                                }
+                                else
+                                {
+                                    map[currentY, currentX] = '·';
+                                }
+                                currentX++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            if (currentY == 0 && (currentX == 4 || currentX == 5) && Boss)
+                            {
+                                Room = 1;
+                            }
+                            else if (currentX == 0 && (currentY == 4 || currentY == 5))
+                            {
+                                Room = 2;
+                            }
+                            else if (currentX == 9 && (currentY == 4 || currentY == 5))
+                            {
+                                Room = 3;
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    map[currentY, currentX] = 'O';
+
+                    DrawMap(map, width, height);
+
+                    switch (Room)
+                    {
+                        case 1:
+                            CombatBoss();
+                            break;
+                        case 2:
+                            ShopMenu();
+                            break;
+                        case 3:
+                            CombatEnemy();
+                            break;
+                    }
+                }
+            case 2:
+                Console.Clear();
+                Tutorial = false;
+                HasItem = false;
+                Boss = false;
+                int startX2 = 4;
+                int startY2 = 9;
+                int currentX2 = startX2;
+                int currentY2 = startY2;
+
+                int width2 = 10;
+                int height2 = 10;
+                char[,] map2 = new char[height2, width2];
+                for (int i = 0; i < height2; i++)
+                {
+                    for (int j = 0; j < width2; j++)
+                    {
+                        if (i == 0 && (j == 4 || j == 5))
+                        {
+                            map2[i, j] = '■';
+                        }
+                        else if (j == 0 && (i == 4 || i == 5))
+                        {
+                            map2[i, j] = '■';
+                        }
+                        else if (j == 9 && (i == 4 || i == 5))
+                        {
+                            map2[i, j] = '■';
+                        }
+                        else
+                        {
+                            map2[i, j] = '·';
+                        }
+                    }
+                }
+
+                map2[currentY2, currentX2] = 'O';
+
+                Room = 0;
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Szoba: {Stage}");
+                    Console.WriteLine("---------------------");
+                    DrawMap(map2, width2, height2);
+                    Console.WriteLine("---------------------");
+                    if (Boss)
+                    {
+                        Console.WriteLine("Az ellenfél legyőzésével megnyílt az út a bosshoz");
+                    }
+                    ConsoleKeyInfo tutorialControl = Console.ReadKey(true);
+                    switch (tutorialControl.Key)
+                    {
+                        case ConsoleKey.W:
+                            if (currentY2 > 0)
+                            {
+                                if ((currentY2 == 0 && currentX2 == 4) || (currentY2 == 0 && currentX2 == 5) || (currentY2 == 4 && currentX2 == 0) || (currentY2 == 5 && currentX2 == 0) || (currentY2 == 4 && currentX2 == 9) || (currentY2 == 5 && currentX2 == 9))
+                                {
+                                    map2[currentY2, currentX2] = '■';
+                                }
+                                else
+                                {
+                                    map2[currentY2, currentX2] = '·';
+                                }
+                                currentY2--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            if (currentY2 < height2 - 1)
+                            {
+                                if ((currentY2 == 0 && currentX2 == 4) || (currentY2 == 0 && currentX2 == 5) || (currentY2 == 4 && currentX2 == 0) || (currentY2 == 5 && currentX2 == 0) || (currentY2 == 4 && currentX2 == 9) || (currentY2 == 5 && currentX2 == 9))
+                                {
+                                    map2[currentY2, currentX2] = '■';
+                                }
+                                else
+                                {
+                                    map2[currentY2, currentX2] = '·';
+                                }
+                                currentY2++;
+                            }
+                            break;
+                        case ConsoleKey.A:
+                            if (currentX2 > 0)
+                            {
+                                if ((currentY2 == 0 && currentX2 == 4) || (currentY2 == 0 && currentX2 == 5) || (currentY2 == 4 && currentX2 == 0) || (currentY2 == 5 && currentX2 == 0) || (currentY2 == 4 && currentX2 == 9) || (currentY2 == 5 && currentX2 == 9))
+                                {
+                                    map2[currentY2, currentX2] = '■';
+                                }
+                                else
+                                {
+                                    map2[currentY2, currentX2] = '·';
+                                }
+                                currentX2--;
+                            }
+                            break;
+                        case ConsoleKey.D:
+                            if (currentX2 < width2 - 1)
+                            {
+                                if ((currentY2 == 0 && currentX2 == 4) || (currentY2 == 0 && currentX2 == 5) || (currentY2 == 4 && currentX2 == 0) || (currentY2 == 5 && currentX2 == 0) || (currentY2 == 4 && currentX2 == 9) || (currentY2 == 5 && currentX2 == 9))
+                                {
+                                    map2[currentY2, currentX2] = '■';
+                                }
+                                else
+                                {
+                                    map2[currentY2, currentX2] = '·';
+                                }
+                                currentX2++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            if (currentY2 == 0 && (currentX2 == 4 || currentX2 == 5) && Boss)
+                            {
+                                Room = 1;
+                            }
+                            else if (currentX2 == 0 && (currentY2 == 4 || currentY2 == 5))
+                            {
+                                Room = 2;
+                            }
+                            else if (currentX2 == 9 && (currentY2 == 4 || currentY2 == 5))
+                            {
+                                Room = 3;
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    map2[currentY2, currentX2] = 'O';
+
+                    DrawMap(map2, width2, height2);
+
+                    switch (Room)
+                    {
+                        case 1:
+                            CombatBoss();
+                            break;
+                        case 2:
+                            ShopMenu();
+                            break;
+                        case 3:
+                            CombatEnemy();
+                            break;
+                    }
+                }
+            case 3:
+                Console.Clear();
+                Tutorial = false;
+                HasItem = false;
+                Boss = false;
+                int startX3 = 4;
+                int startY3 = 9;
+                int currentX3 = startX3;
+                int currentY3 = startY3;
+
+                int width3 = 10;
+                int height3 = 10;
+                char[,] map3 = new char[height3, width3];
+                for (int i = 0; i < height3; i++)
+                {
+                    for (int j = 0; j < width3; j++)
+                    {
+                        if (i == 0 && (j == 4 || j == 5))
+                        {
+                            map3[i, j] = '■';
+                        }
+                        else if (j == 0 && (i == 4 || i == 5))
+                        {
+                            map3[i, j] = '■';
+                        }
+                        else if (j == 9 && (i == 4 || i == 5))
+                        {
+                            map3[i, j] = '■';
+                        }
+                        else
+                        {
+                            map3[i, j] = '·';
+                        }
+                    }
+                }
+
+                map3[currentY3, currentX3] = 'O';
+
+                Room = 0;
+
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Szoba: {Stage}");
+                    Console.WriteLine("---------------------");
+                    DrawMap(map3, width3, height3);
+                    Console.WriteLine("---------------------");
+                    if (Boss)
+                    {
+                        Console.WriteLine("Az ellenfél legyőzésével megnyílt az út a bosshoz");
+                    }
+                    ConsoleKeyInfo tutorialControl = Console.ReadKey(true);
+                    switch (tutorialControl.Key)
+                    {
+                        case ConsoleKey.W:
+                            if (currentY3 > 0)
+                            {
+                                if ((currentY3 == 0 && currentX3 == 4) || (currentY3 == 0 && currentX3 == 5) || (currentY3 == 4 && currentX3 == 0) || (currentY3 == 5 && currentX3 == 0) || (currentY3 == 4 && currentX3 == 9) || (currentY3 == 5 && currentX3 == 9))
+                                {
+                                    map3[currentY3, currentX3] = '■';
+                                }
+                                else
+                                {
+                                    map3[currentY3, currentX3] = '·';
+                                }
+                                currentY3--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            if (currentY3 < height3 - 1)
+                            {
+                                if ((currentY3 == 0 && currentX3 == 4) || (currentY3 == 0 && currentX3 == 5) || (currentY3 == 4 && currentX3 == 0) || (currentY3 == 5 && currentX3 == 0) || (currentY3 == 4 && currentX3 == 9) || (currentY3 == 5 && currentX3 == 9))
+                                {
+                                    map3[currentY3, currentX3] = '■';
+                                }
+                                else
+                                {
+                                    map3[currentY3, currentX3] = '·';
+                                }
+                                currentY3++;
+                            }
+                            break;
+                        case ConsoleKey.A:
+                            if (currentX3 > 0)
+                            {
+                                if ((currentY3 == 0 && currentX3 == 4) || (currentY3 == 0 && currentX3 == 5) || (currentY3 == 4 && currentX3 == 0) || (currentY3 == 5 && currentX3 == 0) || (currentY3 == 4 && currentX3 == 9) || (currentY3 == 5 && currentX3 == 9))
+                                {
+                                    map3[currentY3, currentX3] = '■';
+                                }
+                                else
+                                {
+                                    map3[currentY3, currentX3] = '·';
+                                }
+                                currentX3--;
+                            }
+                            break;
+                        case ConsoleKey.D:
+                            if (currentX3 < width3 - 1)
+                            {
+                                if ((currentY3 == 0 && currentX3 == 4) || (currentY3 == 0 && currentX3 == 5) || (currentY3 == 4 && currentX3 == 0) || (currentY3 == 5 && currentX3 == 0) || (currentY3 == 4 && currentX3 == 9) || (currentY3 == 5 && currentX3 == 9))
+                                {
+                                    map3[currentY3, currentX3] = '■';
+                                }
+                                else
+                                {
+                                    map3[currentY3, currentX3] = '·';
+                                }
+                                currentX3++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            if (currentY3 == 0 && (currentX3 == 4 || currentX3 == 5) && Boss)
+                            {
+                                Room = 1;
+                            }
+                            else if (currentX3 == 0 && (currentY3 == 4 || currentY3 == 5))
+                            {
+                                Room = 2;
+                            }
+                            else if (currentX3 == 9 && (currentY3 == 4 || currentY3 == 5))
+                            {
+                                Room = 3;
+                            }
+                            break;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    map3[currentY3, currentX3] = 'O';
+
+                    DrawMap(map3, width3, height3);
+
+                    switch (Room)
+                    {
+                        case 1:
+                            CombatBoss();
+                            break;
+                        case 2:
+                            ShopMenu();
+                            break;
+                        case 3:
+                            CombatEnemy();
+                            break;
+                    }
+                }
+        }
     }
 
     static void ShopMenu()
@@ -878,7 +1452,7 @@ class Game
                         case 1:
                             damageDeal1 = MovePunch(Item1, PunchLVL, roundEnergy1, FlexBonus);
                             roundEnergy1 -= 5;
-                            lastMove = $"Ütöttél {damageDeal1} pontot";
+                            lastMove1 = $"Ütöttél {damageDeal1} pontot";
                             FlexBonus = 0;
                             break;
                         case 2:
@@ -927,7 +1501,7 @@ class Game
                             }
                             else
                             {
-                                oppLastMove = "Az ellenfélnek nem sikerült kitérni";
+                                oppLastMove1 = "Az ellenfélnek nem sikerült kitérni";
                             }
                             break;
                         case 4:
@@ -1068,7 +1642,7 @@ class Game
                             enemy2[enemyPoint2, 0] = " ";
                             if (enemyPoint2 == 0)
                             {
-                                enemyPoint = 3;
+                                enemyPoint2 = 3;
                             }
                             else
                             {
@@ -1110,9 +1684,9 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy2);
+                            damageBlock2 = MoveBlock(Item1, BlockLVL, roundEnergy2);
                             roundEnergy2 -= 5;
-                            lastMove = $"Blokkoltál {damageBlock2}";
+                            lastMove2 = $"Blokkoltál {damageBlock2}";
                             break;
                         case 3:
                             dodge2 = MoveDodge(Item3, DodgeLVL, roundEnergy2);
@@ -1139,7 +1713,7 @@ class Game
                             oppDamageDeal2 = MovePunch(0, OppPunchLVL, oppRoundEnergy2, OppFlexBonus);
                             roundEnergy2 -= 5;
                             OppFlexBonus = 0;
-                            oppLastMove = $"Az ellenfél {oppDamageDeal2} pontot sebzett";
+                            oppLastMove2 = $"Az ellenfél {oppDamageDeal2} pontot sebzett";
                             break;
                         case 2:
                             oppDamageBlock2 = MoveBlock(0, OppBlockLVL, oppRoundEnergy2);
@@ -1161,7 +1735,7 @@ class Game
                         case 4:
                             OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy2);
                             oppRoundEnergy2 += 5;
-                            oppLastMove = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            oppLastMove2 = $"Az ellenfél {OppFlexBonus} pontot flexelt";
                             break;
                     }
 
@@ -1364,7 +1938,7 @@ class Game
                     switch (enemyOppChoice3)
                     {
                         case 1:
-                            oppDamageDeal = MovePunch(0, OppPunchLVL, oppRoundEnergy3, OppFlexBonus);
+                            oppDamageDeal3 = MovePunch(0, OppPunchLVL, oppRoundEnergy3, OppFlexBonus);
                             roundEnergy3 -= 5;
                             OppFlexBonus = 0;
                             oppLastMove3 = $"Az ellenfél {oppDamageDeal3} pontot sebzett";
@@ -1903,7 +2477,7 @@ class Game
                         case ConsoleKey.P:
                             Room = 0;
                             Stage = 2;
-                            StartGame();
+                            Cutscene2();
                             return;
                         case ConsoleKey.Escape:
                             MainMenu();
@@ -1917,7 +2491,7 @@ class Game
                         case 1:
                             damageDeal1 = MovePunch(Item1, PunchLVL, roundEnergy1, FlexBonus);
                             roundEnergy1 -= 5;
-                            lastMove = $"Ütöttél {damageDeal1} pontot";
+                            lastMove1 = $"Ütöttél {damageDeal1} pontot";
                             FlexBonus = 0;
                             break;
                         case 2:
@@ -1966,7 +2540,7 @@ class Game
                             }
                             else
                             {
-                                oppLastMove = "Az ellenfélnek nem sikerült kitérni";
+                                oppLastMove1 = "Az ellenfélnek nem sikerült kitérni";
                             }
                             break;
                         case 4:
@@ -2041,7 +2615,7 @@ class Game
                     {
                         Room = 0;
                         Stage = 2;
-                        StartGame();
+                        Cutscene2();
                         return;
                     }
                 }
@@ -2112,7 +2686,7 @@ class Game
                             enemy2[enemyPoint2, 0] = " ";
                             if (enemyPoint2 == 0)
                             {
-                                enemyPoint = 3;
+                                enemyPoint2 = 3;
                             }
                             else
                             {
@@ -2136,7 +2710,8 @@ class Game
                             break;
                         case ConsoleKey.P:
                             Room = 0;
-                            Boss = true;
+                            Stage = 3;
+                            Cutscene3();
                             return;
                         case ConsoleKey.Escape:
                             MainMenu();
@@ -2154,9 +2729,9 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy2);
+                            damageBlock2 = MoveBlock(Item1, BlockLVL, roundEnergy2);
                             roundEnergy2 -= 5;
-                            lastMove = $"Blokkoltál {damageBlock2}";
+                            lastMove2 = $"Blokkoltál {damageBlock2}";
                             break;
                         case 3:
                             dodge2 = MoveDodge(Item3, DodgeLVL, roundEnergy2);
@@ -2183,7 +2758,7 @@ class Game
                             oppDamageDeal2 = MovePunch(0, OppPunchLVL, oppRoundEnergy2, OppFlexBonus);
                             roundEnergy2 -= 5;
                             OppFlexBonus = 0;
-                            oppLastMove = $"Az ellenfél {oppDamageDeal2} pontot sebzett";
+                            oppLastMove2 = $"Az ellenfél {oppDamageDeal2} pontot sebzett";
                             break;
                         case 2:
                             oppDamageBlock2 = MoveBlock(0, OppBlockLVL, oppRoundEnergy2);
@@ -2205,7 +2780,7 @@ class Game
                         case 4:
                             OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy2);
                             oppRoundEnergy2 += 5;
-                            oppLastMove = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            oppLastMove2 = $"Az ellenfél {OppFlexBonus} pontot flexelt";
                             break;
                     }
 
@@ -2273,7 +2848,8 @@ class Game
                     else if ((roundHealth2 > 0) && (oppRoundHealth2 <= 0))
                     {
                         Room = 0;
-                        Boss = true;
+                        Stage = 3;
+                        Cutscene3();
                         return;
                     }
                 }
@@ -2369,7 +2945,8 @@ class Game
                             break;
                         case ConsoleKey.P:
                             Room = 0;
-                            Boss = true;
+                            Stage = 4;
+                            Cutscene4();
                             return;
                         case ConsoleKey.Escape:
                             MainMenu();
@@ -2413,7 +2990,7 @@ class Game
                     switch (enemyOppChoice3)
                     {
                         case 1:
-                            oppDamageDeal = MovePunch(0, OppPunchLVL, oppRoundEnergy3, OppFlexBonus);
+                            oppDamageDeal3 = MovePunch(0, OppPunchLVL, oppRoundEnergy3, OppFlexBonus);
                             roundEnergy3 -= 5;
                             OppFlexBonus = 0;
                             oppLastMove3 = $"Az ellenfél {oppDamageDeal3} pontot sebzett";
@@ -2506,7 +3083,8 @@ class Game
                     else if ((roundHealth3 > 0) && (oppRoundHealth3 <= 0))
                     {
                         Room = 0;
-                        Boss = true;
+                        Stage = 4;
+                        Cutscene4();
                         return;
                     }
                 }
