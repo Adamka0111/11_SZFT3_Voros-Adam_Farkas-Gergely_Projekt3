@@ -46,7 +46,7 @@ class Game
 
     static void MainMenu()
     {
-        string[,] menu = new string[,] { { " ", "Játék" }, { " ", "Tutorial" }, { " ", "Irányítás" }, { " ", "Kilépés" } };
+        string[,] menu = new string[,] { { " ", "Játék kezdése" }, { " ", "Tutorial" }, { " ", "Irányítás" }, { " ", "Kilépés" } };
         int menuPoint = 0;
         int menuChoice = 0;
         menu[menuPoint, 0] = ">";
@@ -93,7 +93,7 @@ class Game
 
             Console.WriteLine("==============================================================");
             Console.WriteLine();
-            Console.WriteLine("Készítette: Vörrös Ádám, Farkas Gergely");
+            Console.WriteLine("Készítette: Vörrös Ádám, Farkas Gergely ©2024");
 
             ConsoleKeyInfo menuSelect = Console.ReadKey(true);
             switch (menuSelect.Key)
@@ -186,7 +186,9 @@ class Game
     {
         Console.Clear();
         Console.WriteLine("==============================================================");
-        Console.WriteLine("Gratulálunk! Legyőzted a tulajt, és szégyenében odaadta neked\naz egész edzőtermet. Mostantól te vagy a tulaj.");
+        Console.WriteLine("         _______          |         |          _______     |\r\n         |  |  |          |G   Y   M|          |  |  |     |\r\n         |--+--|          |_________|          |--+--|     |\r\n         |__|__|                               |__|__|     |\r\n                            _______                        |\r\n                           |   |   |            ___|__     |\r\n      _____ ___|___        | · | · |            _|___|___  |\r\n_____/ * * \\_|_____________|___|___|___________________|___|_\r\n     |  U  |\r\n    \\\\_____//\r\n     \\  |  /");
+        Console.WriteLine("--------------------------------------------------------------");
+        Console.WriteLine("Gratulálunk! Legyőzted a tulajt, és szégyenében odaadta neked\naz egész edzőtermet! Mostantól te vagy a tulaj!");
         Console.WriteLine("Nyomj egy billentyűt a folytatáshoz...");
         Console.WriteLine("==============================================================");
         Console.ReadKey();
@@ -239,6 +241,9 @@ class Game
                     break;
                 case ConsoleKey.Enter:
                     classChoice = classPoint + 1;
+                    break;
+                case ConsoleKey.Escape:
+                    MainMenu();
                     break;
             }
 
@@ -327,6 +332,9 @@ class Game
                     break;
                 case ConsoleKey.Enter:
                     lvlChoice = lvlPoint + 1;
+                    break;
+                case ConsoleKey.Escape:
+                    MainMenu();
                     break;
             }
 
@@ -1228,7 +1236,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy);
+                            damageBlock = MoveBlock(Item2, BlockLVL, roundEnergy);
                             roundEnergy -= 5;
                             lastMove = $"Blokkoltál {damageBlock}";
                             break;
@@ -1456,7 +1464,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock1 = MoveBlock(Item1, BlockLVL, roundEnergy1);
+                            damageBlock1 = MoveBlock(Item2, BlockLVL, roundEnergy1);
                             roundEnergy1 -= 5;
                             lastMove1 = $"Blokkoltál {damageBlock1}";
                             break;
@@ -1684,7 +1692,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock2 = MoveBlock(Item1, BlockLVL, roundEnergy2);
+                            damageBlock2 = MoveBlock(Item2, BlockLVL, roundEnergy2);
                             roundEnergy2 -= 5;
                             lastMove2 = $"Blokkoltál {damageBlock2}";
                             break;
@@ -1912,7 +1920,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock3 = MoveBlock(Item1, BlockLVL, roundEnergy3);
+                            damageBlock3 = MoveBlock(Item2, BlockLVL, roundEnergy3);
                             roundEnergy3 -= 5;
                             lastMove3 = $"Blokkoltál {damageBlock3}";
                             break;
@@ -2262,7 +2270,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy);
+                            damageBlock = MoveBlock(Item2, BlockLVL, roundEnergy);
                             roundEnergy -= 5;
                             lastMove = $"Blokkoltál {damageBlock}";
                             break;
@@ -2495,7 +2503,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock1 = MoveBlock(Item1, BlockLVL, roundEnergy1);
+                            damageBlock1 = MoveBlock(Item2, BlockLVL, roundEnergy1);
                             roundEnergy1 -= 5;
                             lastMove1 = $"Blokkoltál {damageBlock1}";
                             break;
@@ -2729,7 +2737,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock2 = MoveBlock(Item1, BlockLVL, roundEnergy2);
+                            damageBlock2 = MoveBlock(Item2, BlockLVL, roundEnergy2);
                             roundEnergy2 -= 5;
                             lastMove2 = $"Blokkoltál {damageBlock2}";
                             break;
@@ -2964,7 +2972,7 @@ class Game
                             FlexBonus = 0;
                             break;
                         case 2:
-                            damageBlock3 = MoveBlock(Item1, BlockLVL, roundEnergy3);
+                            damageBlock3 = MoveBlock(Item2, BlockLVL, roundEnergy3);
                             roundEnergy3 -= 5;
                             lastMove3 = $"Blokkoltál {damageBlock3}";
                             break;
