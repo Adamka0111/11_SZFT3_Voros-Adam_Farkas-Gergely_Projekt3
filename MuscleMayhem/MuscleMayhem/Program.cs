@@ -248,6 +248,7 @@ class Game
     static void StartTutorial()
     {
         Tutorial = true;
+        Stage = 0;
         int startX = 4;
         int startY = 9;
         int currentX = startX;
@@ -293,7 +294,7 @@ class Game
             Console.WriteLine("Ez a tutorial szoba.\nJobb oldalt van a bolt, ahol itemeket tudsz venni.\nBal oldalt van az edzőtér, ahol harcolhatsz egy ellenféllel.\nFent van a folyosó a következő szobához, ahol egy bossal harcolatsz.\nAhhoz, hogy harcolhass a bossal, lekell győznöd előbb az ellenfelet.");
             if (Boss)
             {
-                Console.WriteLine("Az ellenfél legyőzésével megnyílt a bosshoz");
+                Console.WriteLine("Az ellenfél legyőzésével megnyílt az út a bosshoz");
             }
             ConsoleKeyInfo tutorialControl = Console.ReadKey(true);
             switch (tutorialControl.Key)
@@ -538,6 +539,7 @@ class Game
 
     static void CombatEnemy()
     {
+
         switch (Stage)
         {
             case 0:
@@ -548,13 +550,13 @@ class Game
                 int oppRoundHealth = OppHealth;
                 int oppRoundEnergy = OppEnergy;
 
-                
+
                 int damageDeal = 0;
                 int damageBlock = 0;
                 int oppDamageDeal = 0;
                 int oppDamageBlock = 0;
                 bool dodge = false;
-                
+
                 int enemyPoint = 0;
                 int enemyChoice = 0;
                 int enemyOppChoice = 0;
@@ -578,7 +580,7 @@ class Game
                     Console.Write("Energia: ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(roundEnergy + "\t");
-                    Console.ForegroundColor= ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Ellenség energiája: ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(oppRoundEnergy);
@@ -593,6 +595,13 @@ class Game
                     DrawMenu(4, enemy);
                     Console.WriteLine();
                     Console.WriteLine("===================================================================");
+                    Console.WriteLine("Ahhoz hogy legyőzd az ellendéged, választanod kell a négy\nmozdulat közül:Ütés: sebzést okoz az ellenfelednek, hat rá a flex mozdulat, 5 energiába kerül");
+                    Console.WriteLine("\tÜtés: sebzést okoz az ellenfelednek, hat rá a flex mozdulat,\n5 energiába kerül");
+                    Console.WriteLine("\tBlokk: megvéd téged sebződéstől, 5 energiába kerül");
+                    Console.WriteLine("\tKitérés: 25% eséllyel kitérsz teljesen az ellenség támadása elől,\n5 energiát nyersz vissza");
+                    Console.WriteLine("\tFlex: erősebb lessz a következő ütésed (stackelhető), de szabad\nvagy támadásra, 5 energiát nyersz vissza");
+                    Console.WriteLine("Ha kifogy az energiád, gyengébbek lesznek a mozdulataid.");
+                    Console.WriteLine("Akkor nyersz, ha az ellenséged élete nulla. Ha meghalsz, visszakerülsz a pályára.");
                     Console.WriteLine(lastMove);
                     Console.WriteLine(oppLastMove);
 
@@ -767,18 +776,690 @@ class Game
                         Boss = true;
                         return;
                     }
-                }    
+                }
             case 1:
+                string[,] enemy1 = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy1[0, 0] = ">";
+                int roundHealth1 = Health + Item5 + HealthLVL*10;
+                int roundEnergy1 = Energy + Item6 + EnergyLVL*5;
+                int oppRoundHealth1 = OppHealth + Stage * 10;
+                int oppRoundEnergy1 = OppEnergy + Stage * 5;
+
+
+                int damageDeal1 = 0;
+                int damageBlock1 = 0;
+                int oppDamageDeal1 = 0;
+                int oppDamageBlock1 = 0;
+                bool dodge1 = false;
+
+                int enemyPoint1 = 0;
+                int enemyChoice1 = 0;
+                int enemyOppChoice1 = 0;
+                bool oppDodge1 = false;
+
+                string lastMove1 = "";
+                string oppLastMove1 = "";
+
                 while (true)
                 {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth1 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth1 + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy1 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy1);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy1);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine(lastMove1);
+                    Console.WriteLine(oppLastMove1);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy1[enemyPoint1, 0] = " ";
+                            if (enemyPoint1 == 0)
+                            {
+                                enemyPoint1 = 3;
+                            }
+                            else
+                            {
+                                enemyPoint1--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy1[enemyPoint1, 0] = " ";
+                            if (enemyPoint1 == 3)
+                            {
+                                enemyPoint1 = 0;
+                            }
+                            else
+                            {
+                                enemyPoint1++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice1 = enemyPoint1 + 1;
+                            enemyOppChoice1 = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            Boss = true;
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy1[enemyPoint1, 0] = ">";
+
+                    switch (enemyChoice1)
+                    {
+                        case 1:
+                            damageDeal1 = MovePunch(Item1, PunchLVL, roundEnergy1, FlexBonus);
+                            roundEnergy1 -= 5;
+                            lastMove = $"Ütöttél {damageDeal1} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock1 = MoveBlock(Item1, BlockLVL, roundEnergy1);
+                            roundEnergy1 -= 5;
+                            lastMove1 = $"Blokkoltál {damageBlock1}";
+                            break;
+                        case 3:
+                            dodge1 = MoveDodge(Item3, DodgeLVL, roundEnergy1);
+                            roundEnergy1 += 5;
+                            if (dodge1)
+                            {
+                                lastMove1 = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove1 = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy1);
+                            roundEnergy1 += 5;
+                            lastMove1 = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice1)
+                    {
+                        case 1:
+                            oppDamageDeal1 = MovePunch(0, OppPunchLVL, oppRoundEnergy1, OppFlexBonus);
+                            roundEnergy1 -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove1 = $"Az ellenfél {oppDamageDeal1} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock1 = MoveBlock(0, OppBlockLVL, oppRoundEnergy1);
+                            oppRoundEnergy1 -= 5;
+                            oppLastMove1 = $"Az ellenfél {oppDamageBlock1} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge1 = MoveDodge(0, OppDodgeLVL, oppRoundEnergy1);
+                            oppRoundEnergy1 += 5;
+                            if (oppDodge1)
+                            {
+                                oppLastMove1 = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy1);
+                            oppRoundEnergy1 += 5;
+                            oppLastMove1 = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal1 -= oppDamageBlock1;
+                    oppDamageDeal1 -= damageBlock1;
+
+                    if (roundEnergy1 < 0)
+                    {
+                        roundEnergy1 = 0;
+                    }
+
+                    if (roundEnergy1 > (Energy + Item6))
+                    {
+                        roundEnergy1 = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy1 < 0)
+                    {
+                        oppRoundEnergy1 = 0;
+                    }
+
+                    if (oppRoundEnergy1 > OppEnergy)
+                    {
+                        oppRoundEnergy1 = OppEnergy;
+                    }
+
+                    if (damageDeal1 < 0)
+                    {
+                        damageDeal1 = 0;
+                    }
+
+                    if (oppDamageDeal1 < 0)
+                    {
+                        oppDamageDeal1 = 0;
+                    }
+
+                    if (dodge1)
+                    {
+                        oppDamageDeal1 = 0;
+                    }
+
+                    if (oppDodge1)
+                    {
+                        damageDeal1 = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal1} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal1} pontot sebzett az ellenfél");
+
+                    roundHealth1 = roundHealth1 - oppDamageDeal1;
+                    oppRoundHealth1 = oppRoundHealth1 - damageDeal1;
+
+                    enemyChoice1 = 0;
+                    enemyOppChoice1 = 0;
+                    oppDamageDeal1 = 0;
+                    damageDeal1 = 0;
+                    damageBlock1 = 0;
+                    oppDamageBlock1 = 0;
+
+                    if (roundHealth1 <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth1 > 0) && (oppRoundHealth1 <= 0))
+                    {
+                        Room = 0;
+                        Boss = true;
+                        return;
+                    }
                 }
             case 2:
+                string[,] enemy2 = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy2[0, 0] = ">";
+                int roundHealth2 = Health + Item5 + HealthLVL*10;
+                int roundEnergy2 = Energy + Item6 + EnergyLVL*5;
+                int oppRoundHealth2 = OppHealth + Stage * 10;
+                int oppRoundEnergy2 = OppEnergy + Stage * 5;
+
+
+                int damageDeal2 = 0;
+                int damageBlock2 = 0;
+                int oppDamageDeal2 = 0;
+                int oppDamageBlock2 = 0;
+                bool dodge2 = false;
+
+                int enemyPoint2 = 0;
+                int enemyChoice2 = 0;
+                int enemyOppChoice2 = 0;
+                bool oppDodge2 = false;
+
+                string lastMove2 = "";
+                string oppLastMove2 = "";
+
                 while (true)
                 {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth2 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth2 + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy2 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy2);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy2);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine(lastMove2);
+                    Console.WriteLine(oppLastMove2);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy2[enemyPoint2, 0] = " ";
+                            if (enemyPoint2 == 0)
+                            {
+                                enemyPoint = 3;
+                            }
+                            else
+                            {
+                                enemyPoint2--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy2[enemyPoint2, 0] = " ";
+                            if (enemyPoint2 == 3)
+                            {
+                                enemyPoint2 = 0;
+                            }
+                            else
+                            {
+                                enemyPoint2++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice2 = enemyPoint2 + 1;
+                            enemyOppChoice2 = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            Boss = true;
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy2[enemyPoint2, 0] = ">";
+
+                    switch (enemyChoice2)
+                    {
+                        case 1:
+                            damageDeal2 = MovePunch(Item1, PunchLVL, roundEnergy2, FlexBonus);
+                            roundEnergy2 -= 5;
+                            lastMove2 = $"Ütöttél {damageDeal2} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy2);
+                            roundEnergy2 -= 5;
+                            lastMove = $"Blokkoltál {damageBlock2}";
+                            break;
+                        case 3:
+                            dodge2 = MoveDodge(Item3, DodgeLVL, roundEnergy2);
+                            roundEnergy2 += 5;
+                            if (dodge2)
+                            {
+                                lastMove2 = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove2 = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy2);
+                            roundEnergy2 += 5;
+                            lastMove2 = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice2)
+                    {
+                        case 1:
+                            oppDamageDeal2 = MovePunch(0, OppPunchLVL, oppRoundEnergy2, OppFlexBonus);
+                            roundEnergy2 -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove = $"Az ellenfél {oppDamageDeal2} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock2 = MoveBlock(0, OppBlockLVL, oppRoundEnergy2);
+                            oppRoundEnergy2 -= 5;
+                            oppLastMove2 = $"Az ellenfél {oppDamageBlock2} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge2 = MoveDodge(0, OppDodgeLVL, oppRoundEnergy2);
+                            oppRoundEnergy2 += 5;
+                            if (oppDodge2)
+                            {
+                                oppLastMove2 = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove2 = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy2);
+                            oppRoundEnergy2 += 5;
+                            oppLastMove = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal2 -= oppDamageBlock2;
+                    oppDamageDeal2 -= damageBlock2;
+
+                    if (roundEnergy2 < 0)
+                    {
+                        roundEnergy2 = 0;
+                    }
+
+                    if (roundEnergy2 > (Energy + Item6))
+                    {
+                        roundEnergy2 = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy2 < 0)
+                    {
+                        oppRoundEnergy2 = 0;
+                    }
+
+                    if (oppRoundEnergy2 > OppEnergy)
+                    {
+                        oppRoundEnergy2 = OppEnergy;
+                    }
+
+                    if (damageDeal2 < 0)
+                    {
+                        damageDeal2 = 0;
+                    }
+
+                    if (oppDamageDeal2 < 0)
+                    {
+                        oppDamageDeal2 = 0;
+                    }
+
+                    if (dodge2)
+                    {
+                        oppDamageDeal2 = 0;
+                    }
+
+                    if (oppDodge2)
+                    {
+                        damageDeal2 = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal2} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal2} pontot sebzett az ellenfél");
+
+                    roundHealth2 = roundHealth2 - oppDamageDeal2;
+                    oppRoundHealth2 = oppRoundHealth2 - damageDeal2;
+
+                    enemyChoice2 = 0;
+                    enemyOppChoice2 = 0;
+                    oppDamageDeal2 = 0;
+                    damageDeal2 = 0;
+                    damageBlock2 = 0;
+                    oppDamageBlock2 = 0;
+
+                    if (roundHealth2 <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth2 > 0) && (oppRoundHealth2 <= 0))
+                    {
+                        Room = 0;
+                        Boss = true;
+                        return;
+                    }
                 }
             case 3:
+                string[,] enemy3 = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy3[0, 0] = ">";
+                int roundHealth3 = Health + Item5 + HealthLVL * 10;
+                int roundEnergy3 = Energy + Item6 + EnergyLVL * 5;
+                int oppRoundHealth3 = OppHealth + Stage * 10;
+                int oppRoundEnergy3 = OppEnergy + Stage * 5;
+
+
+                int damageDeal3 = 0;
+                int damageBlock3 = 0;
+                int oppDamageDeal3 = 0;
+                int oppDamageBlock3 = 0;
+                bool dodge3 = false;
+
+                int enemyPoint3 = 0;
+                int enemyChoice3 = 0;
+                int enemyOppChoice3 = 0;
+                bool oppDodge3 = false;
+
+                string lastMove3 = "";
+                string oppLastMove3 = "";
+
                 while (true)
                 {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth3 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth3 + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy3 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy3);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy3);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine(lastMove3);
+                    Console.WriteLine(oppLastMove3);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy3[enemyPoint3, 0] = " ";
+                            if (enemyPoint3 == 0)
+                            {
+                                enemyPoint3 = 3;
+                            }
+                            else
+                            {
+                                enemyPoint3--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy3[enemyPoint3, 0] = " ";
+                            if (enemyPoint3 == 3)
+                            {
+                                enemyPoint3 = 0;
+                            }
+                            else
+                            {
+                                enemyPoint3++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice3 = enemyPoint3 + 1;
+                            enemyOppChoice3 = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            Boss = true;
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy3[enemyPoint3, 0] = ">";
+
+                    switch (enemyChoice3)
+                    {
+                        case 1:
+                            damageDeal3 = MovePunch(Item1, PunchLVL, roundEnergy3, FlexBonus);
+                            roundEnergy3 -= 5;
+                            lastMove3 = $"Ütöttél {damageDeal3} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock3 = MoveBlock(Item1, BlockLVL, roundEnergy3);
+                            roundEnergy3 -= 5;
+                            lastMove3 = $"Blokkoltál {damageBlock3}";
+                            break;
+                        case 3:
+                            dodge3 = MoveDodge(Item3, DodgeLVL, roundEnergy3);
+                            roundEnergy3 += 5;
+                            if (dodge3)
+                            {
+                                lastMove3 = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove3 = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy3);
+                            roundEnergy3 += 5;
+                            lastMove3 = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice3)
+                    {
+                        case 1:
+                            oppDamageDeal = MovePunch(0, OppPunchLVL, oppRoundEnergy3, OppFlexBonus);
+                            roundEnergy3 -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove3 = $"Az ellenfél {oppDamageDeal3} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock3 = MoveBlock(0, OppBlockLVL, oppRoundEnergy3);
+                            oppRoundEnergy3 -= 5;
+                            oppLastMove3 = $"Az ellenfél {oppDamageBlock3} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge3 = MoveDodge(0, OppDodgeLVL, oppRoundEnergy3);
+                            oppRoundEnergy3 += 5;
+                            if (oppDodge3)
+                            {
+                                oppLastMove3 = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove3 = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy3);
+                            oppRoundEnergy3 += 5;
+                            oppLastMove3 = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal3 -= oppDamageBlock3;
+                    oppDamageDeal3 -= damageBlock3;
+
+                    if (roundEnergy3 < 0)
+                    {
+                        roundEnergy3 = 0;
+                    }
+
+                    if (roundEnergy3 > (Energy + Item6))
+                    {
+                        roundEnergy3 = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy3 < 0)
+                    {
+                        oppRoundEnergy3 = 0;
+                    }
+
+                    if (oppRoundEnergy3 > OppEnergy)
+                    {
+                        oppRoundEnergy3 = OppEnergy;
+                    }
+
+                    if (damageDeal3 < 0)
+                    {
+                        damageDeal3 = 0;
+                    }
+
+                    if (oppDamageDeal3 < 0)
+                    {
+                        oppDamageDeal3 = 0;
+                    }
+
+                    if (dodge3)
+                    {
+                        oppDamageDeal3 = 0;
+                    }
+
+                    if (oppDodge3)
+                    {
+                        damageDeal3 = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal3} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal3} pontot sebzett az ellenfél");
+
+                    roundHealth3 = roundHealth3 - oppDamageDeal3;
+                    oppRoundHealth3 = oppRoundHealth3 - damageDeal3;
+
+                    enemyChoice3 = 0;
+                    enemyOppChoice3 = 0;
+                    oppDamageDeal3 = 0;
+                    damageDeal3 = 0;
+                    damageBlock3 = 0;
+                    oppDamageBlock3 = 0;
+
+                    if (roundHealth3 <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth3 > 0) && (oppRoundHealth3 <= 0))
+                    {
+                        Room = 0;
+                        Boss = true;
+                        return;
+                    }
                 }
         }
 
@@ -895,8 +1576,941 @@ class Game
 
     static void CombatBoss()
     {
-        Console.Clear();
-        Console.WriteLine("boss");
+        switch (Stage)
+        {
+            case 0:
+                string[,] enemy = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy[0, 0] = ">";
+                int roundHealth = Health + Item5;
+                int roundEnergy = Energy + Item6;
+                int oppRoundHealth = OppHealth;
+                int oppRoundEnergy = OppEnergy;
+
+                OppPunchLVL = Stage+1;
+                OppBlockLVL = Stage+1;
+                OppDodgeLVL = Stage+1;
+                OppFlexLVL = Stage+1;
+
+                int damageDeal = 0;
+                int damageBlock = 0;
+                int oppDamageDeal = 0;
+                int oppDamageBlock = 0;
+                bool dodge = false;
+
+                int enemyPoint = 0;
+                int enemyChoice = 0;
+                int enemyOppChoice = 0;
+                bool oppDodge = false;
+
+                string lastMove = "";
+                string oppLastMove = "";
+
+                while (true)
+                {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("Öld meg a bosszt hogy befejezd a tutorialt.");
+                    Console.WriteLine(lastMove);
+                    Console.WriteLine(oppLastMove);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy[enemyPoint, 0] = " ";
+                            if (enemyPoint == 0)
+                            {
+                                enemyPoint = 3;
+                            }
+                            else
+                            {
+                                enemyPoint--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy[enemyPoint, 0] = " ";
+                            if (enemyPoint == 3)
+                            {
+                                enemyPoint = 0;
+                            }
+                            else
+                            {
+                                enemyPoint++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice = enemyPoint + 1;
+                            enemyOppChoice = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            MainMenu();
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy[enemyPoint, 0] = ">";
+
+                    switch (enemyChoice)
+                    {
+                        case 1:
+                            damageDeal = MovePunch(Item1, PunchLVL, roundEnergy, FlexBonus);
+                            roundEnergy -= 5;
+                            lastMove = $"Ütöttél {damageDeal} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy);
+                            roundEnergy -= 5;
+                            lastMove = $"Blokkoltál {damageBlock}";
+                            break;
+                        case 3:
+                            dodge = MoveDodge(Item3, DodgeLVL, roundEnergy);
+                            roundEnergy += 5;
+                            if (dodge)
+                            {
+                                lastMove = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy);
+                            roundEnergy += 5;
+                            lastMove = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice)
+                    {
+                        case 1:
+                            oppDamageDeal = MovePunch(0, OppPunchLVL, oppRoundEnergy, OppFlexBonus);
+                            roundEnergy -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove = $"Az ellenfél {oppDamageDeal} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock = MoveBlock(0, OppBlockLVL, oppRoundEnergy);
+                            oppRoundEnergy -= 5;
+                            oppLastMove = $"Az ellenfél {oppDamageBlock} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge = MoveDodge(0, OppDodgeLVL, oppRoundEnergy);
+                            oppRoundEnergy += 5;
+                            if (oppDodge)
+                            {
+                                oppLastMove = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy);
+                            oppRoundEnergy += 5;
+                            oppLastMove = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal -= oppDamageBlock;
+                    oppDamageDeal -= damageBlock;
+
+                    if (roundEnergy < 0)
+                    {
+                        roundEnergy = 0;
+                    }
+
+                    if (roundEnergy > (Energy + Item6))
+                    {
+                        roundEnergy = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy < 0)
+                    {
+                        oppRoundEnergy = 0;
+                    }
+
+                    if (oppRoundEnergy > OppEnergy)
+                    {
+                        oppRoundEnergy = OppEnergy;
+                    }
+
+                    if (damageDeal < 0)
+                    {
+                        damageDeal = 0;
+                    }
+
+                    if (oppDamageDeal < 0)
+                    {
+                        oppDamageDeal = 0;
+                    }
+
+                    if (dodge)
+                    {
+                        oppDamageDeal = 0;
+                    }
+
+                    if (oppDodge)
+                    {
+                        damageDeal = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal} pontot sebzett az ellenfél");
+
+                    roundHealth = roundHealth - oppDamageDeal;
+                    oppRoundHealth = oppRoundHealth - damageDeal;
+
+                    enemyChoice = 0;
+                    enemyOppChoice = 0;
+                    oppDamageDeal = 0;
+                    damageDeal = 0;
+                    damageBlock = 0;
+                    oppDamageBlock = 0;
+
+                    if (roundHealth <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth > 0) && (oppRoundHealth <= 0))
+                    {
+                        Room = 0;
+                        MainMenu();
+                        return;
+                    }
+                }
+            case 1:
+                string[,] enemy1 = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy1[0, 0] = ">";
+                int roundHealth1 = Health + Item5 + HealthLVL * 10;
+                int roundEnergy1 = Energy + Item6 + EnergyLVL * 5;
+                int oppRoundHealth1 = OppHealth + Stage * 10;
+                int oppRoundEnergy1 = OppEnergy + Stage * 5;
+
+                OppPunchLVL = Stage + 1;
+                OppBlockLVL = Stage + 1;
+                OppDodgeLVL = Stage + 1;
+                OppFlexLVL = Stage + 1;
+
+                int damageDeal1 = 0;
+                int damageBlock1 = 0;
+                int oppDamageDeal1 = 0;
+                int oppDamageBlock1 = 0;
+                bool dodge1 = false;
+
+                int enemyPoint1 = 0;
+                int enemyChoice1 = 0;
+                int enemyOppChoice1 = 0;
+                bool oppDodge1 = false;
+
+                string lastMove1 = "";
+                string oppLastMove1 = "";
+
+                while (true)
+                {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth1 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth1 + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy1 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy1);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy1);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine(lastMove1);
+                    Console.WriteLine(oppLastMove1);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy1[enemyPoint1, 0] = " ";
+                            if (enemyPoint1 == 0)
+                            {
+                                enemyPoint1 = 3;
+                            }
+                            else
+                            {
+                                enemyPoint1--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy1[enemyPoint1, 0] = " ";
+                            if (enemyPoint1 == 3)
+                            {
+                                enemyPoint1 = 0;
+                            }
+                            else
+                            {
+                                enemyPoint1++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice1 = enemyPoint1 + 1;
+                            enemyOppChoice1 = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            Stage = 2;
+                            StartGame();
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy1[enemyPoint1, 0] = ">";
+
+                    switch (enemyChoice1)
+                    {
+                        case 1:
+                            damageDeal1 = MovePunch(Item1, PunchLVL, roundEnergy1, FlexBonus);
+                            roundEnergy1 -= 5;
+                            lastMove = $"Ütöttél {damageDeal1} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock1 = MoveBlock(Item1, BlockLVL, roundEnergy1);
+                            roundEnergy1 -= 5;
+                            lastMove1 = $"Blokkoltál {damageBlock1}";
+                            break;
+                        case 3:
+                            dodge1 = MoveDodge(Item3, DodgeLVL, roundEnergy1);
+                            roundEnergy1 += 5;
+                            if (dodge1)
+                            {
+                                lastMove1 = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove1 = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy1);
+                            roundEnergy1 += 5;
+                            lastMove1 = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice1)
+                    {
+                        case 1:
+                            oppDamageDeal1 = MovePunch(0, OppPunchLVL, oppRoundEnergy1, OppFlexBonus);
+                            roundEnergy1 -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove1 = $"Az ellenfél {oppDamageDeal1} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock1 = MoveBlock(0, OppBlockLVL, oppRoundEnergy1);
+                            oppRoundEnergy1 -= 5;
+                            oppLastMove1 = $"Az ellenfél {oppDamageBlock1} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge1 = MoveDodge(0, OppDodgeLVL, oppRoundEnergy1);
+                            oppRoundEnergy1 += 5;
+                            if (oppDodge1)
+                            {
+                                oppLastMove1 = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy1);
+                            oppRoundEnergy1 += 5;
+                            oppLastMove1 = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal1 -= oppDamageBlock1;
+                    oppDamageDeal1 -= damageBlock1;
+
+                    if (roundEnergy1 < 0)
+                    {
+                        roundEnergy1 = 0;
+                    }
+
+                    if (roundEnergy1 > (Energy + Item6))
+                    {
+                        roundEnergy1 = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy1 < 0)
+                    {
+                        oppRoundEnergy1 = 0;
+                    }
+
+                    if (oppRoundEnergy1 > OppEnergy)
+                    {
+                        oppRoundEnergy1 = OppEnergy;
+                    }
+
+                    if (damageDeal1 < 0)
+                    {
+                        damageDeal1 = 0;
+                    }
+
+                    if (oppDamageDeal1 < 0)
+                    {
+                        oppDamageDeal1 = 0;
+                    }
+
+                    if (dodge1)
+                    {
+                        oppDamageDeal1 = 0;
+                    }
+
+                    if (oppDodge1)
+                    {
+                        damageDeal1 = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal1} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal1} pontot sebzett az ellenfél");
+
+                    roundHealth1 = roundHealth1 - oppDamageDeal1;
+                    oppRoundHealth1 = oppRoundHealth1 - damageDeal1;
+
+                    enemyChoice1 = 0;
+                    enemyOppChoice1 = 0;
+                    oppDamageDeal1 = 0;
+                    damageDeal1 = 0;
+                    damageBlock1 = 0;
+                    oppDamageBlock1 = 0;
+
+                    if (roundHealth1 <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth1 > 0) && (oppRoundHealth1 <= 0))
+                    {
+                        Room = 0;
+                        Stage = 2;
+                        StartGame();
+                        return;
+                    }
+                }
+            case 2:
+                string[,] enemy2 = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy2[0, 0] = ">";
+                int roundHealth2 = Health + Item5 + HealthLVL * 10;
+                int roundEnergy2 = Energy + Item6 + EnergyLVL * 5;
+                int oppRoundHealth2 = OppHealth + Stage * 10;
+                int oppRoundEnergy2 = OppEnergy + Stage * 5;
+
+                OppPunchLVL = Stage + 1;
+                OppBlockLVL = Stage + 1;
+                OppDodgeLVL = Stage + 1;
+                OppFlexLVL = Stage + 1;
+
+                int damageDeal2 = 0;
+                int damageBlock2 = 0;
+                int oppDamageDeal2 = 0;
+                int oppDamageBlock2 = 0;
+                bool dodge2 = false;
+
+                int enemyPoint2 = 0;
+                int enemyChoice2 = 0;
+                int enemyOppChoice2 = 0;
+                bool oppDodge2 = false;
+
+                string lastMove2 = "";
+                string oppLastMove2 = "";
+
+                while (true)
+                {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth2 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth2 + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy2 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy2);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy2);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine(lastMove2);
+                    Console.WriteLine(oppLastMove2);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy2[enemyPoint2, 0] = " ";
+                            if (enemyPoint2 == 0)
+                            {
+                                enemyPoint = 3;
+                            }
+                            else
+                            {
+                                enemyPoint2--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy2[enemyPoint2, 0] = " ";
+                            if (enemyPoint2 == 3)
+                            {
+                                enemyPoint2 = 0;
+                            }
+                            else
+                            {
+                                enemyPoint2++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice2 = enemyPoint2 + 1;
+                            enemyOppChoice2 = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            Boss = true;
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy2[enemyPoint2, 0] = ">";
+
+                    switch (enemyChoice2)
+                    {
+                        case 1:
+                            damageDeal2 = MovePunch(Item1, PunchLVL, roundEnergy2, FlexBonus);
+                            roundEnergy2 -= 5;
+                            lastMove2 = $"Ütöttél {damageDeal2} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock = MoveBlock(Item1, BlockLVL, roundEnergy2);
+                            roundEnergy2 -= 5;
+                            lastMove = $"Blokkoltál {damageBlock2}";
+                            break;
+                        case 3:
+                            dodge2 = MoveDodge(Item3, DodgeLVL, roundEnergy2);
+                            roundEnergy2 += 5;
+                            if (dodge2)
+                            {
+                                lastMove2 = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove2 = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy2);
+                            roundEnergy2 += 5;
+                            lastMove2 = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice2)
+                    {
+                        case 1:
+                            oppDamageDeal2 = MovePunch(0, OppPunchLVL, oppRoundEnergy2, OppFlexBonus);
+                            roundEnergy2 -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove = $"Az ellenfél {oppDamageDeal2} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock2 = MoveBlock(0, OppBlockLVL, oppRoundEnergy2);
+                            oppRoundEnergy2 -= 5;
+                            oppLastMove2 = $"Az ellenfél {oppDamageBlock2} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge2 = MoveDodge(0, OppDodgeLVL, oppRoundEnergy2);
+                            oppRoundEnergy2 += 5;
+                            if (oppDodge2)
+                            {
+                                oppLastMove2 = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove2 = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy2);
+                            oppRoundEnergy2 += 5;
+                            oppLastMove = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal2 -= oppDamageBlock2;
+                    oppDamageDeal2 -= damageBlock2;
+
+                    if (roundEnergy2 < 0)
+                    {
+                        roundEnergy2 = 0;
+                    }
+
+                    if (roundEnergy2 > (Energy + Item6))
+                    {
+                        roundEnergy2 = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy2 < 0)
+                    {
+                        oppRoundEnergy2 = 0;
+                    }
+
+                    if (oppRoundEnergy2 > OppEnergy)
+                    {
+                        oppRoundEnergy2 = OppEnergy;
+                    }
+
+                    if (damageDeal2 < 0)
+                    {
+                        damageDeal2 = 0;
+                    }
+
+                    if (oppDamageDeal2 < 0)
+                    {
+                        oppDamageDeal2 = 0;
+                    }
+
+                    if (dodge2)
+                    {
+                        oppDamageDeal2 = 0;
+                    }
+
+                    if (oppDodge2)
+                    {
+                        damageDeal2 = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal2} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal2} pontot sebzett az ellenfél");
+
+                    roundHealth2 = roundHealth2 - oppDamageDeal2;
+                    oppRoundHealth2 = oppRoundHealth2 - damageDeal2;
+
+                    enemyChoice2 = 0;
+                    enemyOppChoice2 = 0;
+                    oppDamageDeal2 = 0;
+                    damageDeal2 = 0;
+                    damageBlock2 = 0;
+                    oppDamageBlock2 = 0;
+
+                    if (roundHealth2 <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth2 > 0) && (oppRoundHealth2 <= 0))
+                    {
+                        Room = 0;
+                        Boss = true;
+                        return;
+                    }
+                }
+            case 3:
+                string[,] enemy3 = { { " ", "Ütés" }, { " ", "Blokk" }, { " ", "Kitérés" }, { " ", "Flex" } };
+                enemy3[0, 0] = ">";
+                int roundHealth3 = Health + Item5 + HealthLVL * 10;
+                int roundEnergy3 = Energy + Item6 + EnergyLVL * 5;
+                int oppRoundHealth3 = OppHealth + Stage * 10;
+                int oppRoundEnergy3 = OppEnergy + Stage * 5;
+
+                OppPunchLVL = Stage + 1;
+                OppBlockLVL = Stage + 1;
+                OppDodgeLVL = Stage + 1;
+                OppFlexLVL = Stage + 1;
+
+
+                int damageDeal3 = 0;
+                int damageBlock3 = 0;
+                int oppDamageDeal3 = 0;
+                int oppDamageBlock3 = 0;
+                bool dodge3 = false;
+
+                int enemyPoint3 = 0;
+                int enemyChoice3 = 0;
+                int enemyOppChoice3 = 0;
+                bool oppDodge3 = false;
+
+                string lastMove3 = "";
+                string oppLastMove3 = "";
+
+                while (true)
+                {
+
+                    Console.Clear();
+                    Console.Write("Életerő: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(roundHealth3 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség életereje: ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(oppRoundHealth3 + "\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Energia: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(roundEnergy3 + "\t");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("Ellenség energiája: ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(oppRoundEnergy3);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine("        _____                   _____\r\n       /     \\                 /     \\\r\n       |     |                 |     |\r\n       \\_____/                 \\_____/\r\n         /|                       |\\\r\n         \\|//                   \\\\|/\r\n          Y/                     \\Y\r\n          |                       |\r\n          |                       |\r\n          A                       A\r\n         / \\                     / \\");
+                    Console.WriteLine();
+                    Console.WriteLine("-------------------------------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("Válaszd ki a mozdulatodat: ");
+                    Console.WriteLine();
+                    DrawMenu(4, enemy3);
+                    Console.WriteLine();
+                    Console.WriteLine("===================================================================");
+                    Console.WriteLine(lastMove3);
+                    Console.WriteLine(oppLastMove3);
+
+                    ConsoleKeyInfo enemySelect = Console.ReadKey(true);
+                    switch (enemySelect.Key)
+                    {
+                        case ConsoleKey.W:
+                            enemy3[enemyPoint3, 0] = " ";
+                            if (enemyPoint3 == 0)
+                            {
+                                enemyPoint3 = 3;
+                            }
+                            else
+                            {
+                                enemyPoint3--;
+                            }
+                            break;
+                        case ConsoleKey.S:
+                            enemy3[enemyPoint3, 0] = " ";
+                            if (enemyPoint3 == 3)
+                            {
+                                enemyPoint3 = 0;
+                            }
+                            else
+                            {
+                                enemyPoint3++;
+                            }
+                            break;
+                        case ConsoleKey.Enter:
+                            enemyChoice3 = enemyPoint3 + 1;
+                            enemyOppChoice3 = random.Next(1, 5);
+                            break;
+                        case ConsoleKey.P:
+                            Room = 0;
+                            Boss = true;
+                            return;
+                        case ConsoleKey.Escape:
+                            MainMenu();
+                            break;
+                    }
+
+                    enemy3[enemyPoint3, 0] = ">";
+
+                    switch (enemyChoice3)
+                    {
+                        case 1:
+                            damageDeal3 = MovePunch(Item1, PunchLVL, roundEnergy3, FlexBonus);
+                            roundEnergy3 -= 5;
+                            lastMove3 = $"Ütöttél {damageDeal3} pontot";
+                            FlexBonus = 0;
+                            break;
+                        case 2:
+                            damageBlock3 = MoveBlock(Item1, BlockLVL, roundEnergy3);
+                            roundEnergy3 -= 5;
+                            lastMove3 = $"Blokkoltál {damageBlock3}";
+                            break;
+                        case 3:
+                            dodge3 = MoveDodge(Item3, DodgeLVL, roundEnergy3);
+                            roundEnergy3 += 5;
+                            if (dodge3)
+                            {
+                                lastMove3 = "Sikiresen kitértél";
+                            }
+                            else
+                            {
+                                lastMove3 = "Nem sikerült kitérned";
+                            }
+                            break;
+                        case 4:
+                            FlexBonus = MoveFlex(Item4, FlexLVL, roundEnergy3);
+                            roundEnergy3 += 5;
+                            lastMove3 = $"{FlexBonus} pontot flexeltél";
+                            break;
+                    }
+
+                    switch (enemyOppChoice3)
+                    {
+                        case 1:
+                            oppDamageDeal = MovePunch(0, OppPunchLVL, oppRoundEnergy3, OppFlexBonus);
+                            roundEnergy3 -= 5;
+                            OppFlexBonus = 0;
+                            oppLastMove3 = $"Az ellenfél {oppDamageDeal3} pontot sebzett";
+                            break;
+                        case 2:
+                            oppDamageBlock3 = MoveBlock(0, OppBlockLVL, oppRoundEnergy3);
+                            oppRoundEnergy3 -= 5;
+                            oppLastMove3 = $"Az ellenfél {oppDamageBlock3} pontot blokkolt";
+                            break;
+                        case 3:
+                            oppDodge3 = MoveDodge(0, OppDodgeLVL, oppRoundEnergy3);
+                            oppRoundEnergy3 += 5;
+                            if (oppDodge3)
+                            {
+                                oppLastMove3 = "Az ellenfél sikeresen kitért";
+                            }
+                            else
+                            {
+                                oppLastMove3 = "Az ellenfélnek nem sikerült kitérni";
+                            }
+                            break;
+                        case 4:
+                            OppFlexBonus = MoveFlex(0, OppFlexLVL, oppRoundEnergy3);
+                            oppRoundEnergy3 += 5;
+                            oppLastMove3 = $"Az ellenfél {OppFlexBonus} pontot flexelt";
+                            break;
+                    }
+
+                    damageDeal3 -= oppDamageBlock3;
+                    oppDamageDeal3 -= damageBlock3;
+
+                    if (roundEnergy3 < 0)
+                    {
+                        roundEnergy3 = 0;
+                    }
+
+                    if (roundEnergy3 > (Energy + Item6))
+                    {
+                        roundEnergy3 = Energy + Item6;
+                    }
+
+                    if (oppRoundEnergy3 < 0)
+                    {
+                        oppRoundEnergy3 = 0;
+                    }
+
+                    if (oppRoundEnergy3 > OppEnergy)
+                    {
+                        oppRoundEnergy3 = OppEnergy;
+                    }
+
+                    if (damageDeal3 < 0)
+                    {
+                        damageDeal3 = 0;
+                    }
+
+                    if (oppDamageDeal3 < 0)
+                    {
+                        oppDamageDeal3 = 0;
+                    }
+
+                    if (dodge3)
+                    {
+                        oppDamageDeal3 = 0;
+                    }
+
+                    if (oppDodge3)
+                    {
+                        damageDeal3 = 0;
+                    }
+
+                    Console.WriteLine($"{damageDeal3} pontot sebeztél");
+                    Console.WriteLine($"{oppDamageDeal3} pontot sebzett az ellenfél");
+
+                    roundHealth3 = roundHealth3 - oppDamageDeal3;
+                    oppRoundHealth3 = oppRoundHealth3 - damageDeal3;
+
+                    enemyChoice3 = 0;
+                    enemyOppChoice3 = 0;
+                    oppDamageDeal3 = 0;
+                    damageDeal3 = 0;
+                    damageBlock3 = 0;
+                    oppDamageBlock3 = 0;
+
+                    if (roundHealth3 <= 0)
+                    {
+                        Room = 0;
+                        return;
+                    }
+                    else if ((roundHealth3 > 0) && (oppRoundHealth3 <= 0))
+                    {
+                        Room = 0;
+                        Boss = true;
+                        return;
+                    }
+                }
+        }
     }
 
     static void DrawMap(char[,] map, int width, int height)
