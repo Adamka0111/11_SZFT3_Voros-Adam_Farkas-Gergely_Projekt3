@@ -15,6 +15,7 @@ namespace MuscleMayhem_Lib
             Boss = false;
             HasItem = false;
             CurrentItem = 0;
+            BossCheck = false;
         }
 
         public int Stage { get; set; }
@@ -22,5 +23,6 @@ namespace MuscleMayhem_Lib
         public bool Boss { get; set; }
         public bool HasItem { get; set; }
         public int CurrentItem { get; set; }
+        public bool BossCheck { get; set; }
     }
 }

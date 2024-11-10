@@ -40,7 +40,7 @@ void DrawMap(char[,] map, int height, int width)
                 Console.Write($" {map[i, j]}");
             }
         }
-        Console.Write('|');
+        Console.Write(" |");
         Console.WriteLine();
     }
 }
@@ -462,11 +462,11 @@ void CombatEnemy()
             DrawMenu(menu.CombatMenu);
         }
         Console.WriteLine("-------------------------------------------------------------------\nVálassz egy mozdulatot.");
-        if (game.Stage == 0 && game.Boss)
+        if (game.Stage == 0 && game.Boss && game.BossCheck)
         {
             Console.WriteLine("Győzd le a boss-t a tutorial befejezéséhez!");
         }
-        else if (game.Stage == 0)
+        else if (game.Stage == 0 && !game.BossCheck)
         {
             Console.WriteLine("Győzd le az ellenfelet a mozdulatok használatával! Miután legyőzöd \nezt az ellenfelet, harcolhatsz a szint boss-ával.");
         }
@@ -678,18 +678,25 @@ void CombatEnemy()
         {
             if (game.Boss)
             {
-                if (game.Stage == 0)
+                if (game.BossCheck)
                 {
-                    Console.Clear();
-                    Console.WriteLine("==============================================================\nGratulálok, sikeresen kivitted a tutorialt! \nMost már készen állsz bosszút állni az edzőterem tulaján!.\n==============================================================");
-                    Console.ReadKey();
-                    MainMenu();
+                    if (game.Stage == 0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("==============================================================\nGratulálok, sikeresen kivitted a tutorialt! \nMost már készen állsz bosszút állni az edzőterem tulaján!.\n==============================================================");
+                        Console.ReadKey();
+                        MainMenu();
+                    }
+                    else
+                    {
+                        game.Room = 0;
+                        game.Stage++;
+                        Cutscenes(game.Stage);
+                    }
                 }
                 else
                 {
                     game.Room = 0;
-                    game.Stage++;
-                    Cutscenes(game.Stage);
                 }
             }
             else if (!game.Boss)
@@ -832,20 +839,20 @@ void StartGame()
     while (true)
     {
         Console.Clear();
-        Console.WriteLine($"Szoba: {game.Stage}\n=====================================");
+        Console.WriteLine($"Szoba: {game.Stage}\n=======================================");
         DrawMap(map, width, height);
-        Console.WriteLine("=====================================");
+        Console.WriteLine("=======================================");
         if (game.Boss)
         {
             Console.WriteLine("Az ellenfél legyőzésével megnyílt az \nút a bosshoz.");
         }
         if(game.Boss && game.Stage == 0)
         {
-            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("---------------------------------------");
         }
         if (game.Stage == 0)
         {
-            Console.WriteLine("Ez a tutorial:\n -Bal oldalt van a bolt.\n -Fent harcolhatsz a szint bosszával.\n -Bal oldalt van a szint ellensége.\n-------------------------------------\nMenj oda a zöld négyzethez, \nés nyomj egy entert hogy bemenj.\n=====================================");
+            Console.WriteLine("Ez a tutorial:\n -Bal oldalt van a bolt.\n -Fent harcolhatsz a szint bosszával.\n -Bal oldalt van a szint ellensége.\n---------------------------------------\nMenj oda a zöld négyzethez, \nés nyomj egy entert hogy bemenj.\n=======================================");
         }
         ConsoleKeyInfo tutorialControl = Console.ReadKey(true);
         switch (tutorialControl.Key)
@@ -934,6 +941,7 @@ void StartGame()
             case 1:
                 if (game.Boss)
                 {
+                    game.BossCheck = true;
                     CombatEnemy();
                 }
                 break;
@@ -941,6 +949,7 @@ void StartGame()
                 ShopMenu();
                 break;
             case 3:
+                game.BossCheck = false;
                 CombatEnemy();
                 break;
         }
